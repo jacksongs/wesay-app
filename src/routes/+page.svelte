@@ -103,7 +103,7 @@
 		<div>
 
 		<div id="missing">
-			<p>Someone missing? Email a video link <a href="mailto:jack.snape@abc.net.au">here</a>.</p>
+			<p>Someone missing? Email a video link <a href="mailto:jacksongsmedia@gmail.com">here</a>.</p>
 		</div>
 	</section>	
 </div>
