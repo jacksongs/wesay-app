@@ -27,24 +27,25 @@
 	let filteredAths = athletes;
 
 	// Starting player, try random
-    let showVideoId = randAth.id;
+    $: showVideoId = randAth.id;
 
 	$: result = athletes.find(item => item.id === showVideoId);
 
 	function update(x) {
 		showVideoId = x;
-		console.log(showVideoId);
+		console.log("Update",showVideoId,result);
+		console.log("Update",showVideoId,result);
 	};
 
 	function random() {
 		randAth = athletes[Math.floor(Math.random()*athletes.length)];
 		showVideoId = randAth.id;
-		console.log(randAth);
+		console.log("Random",showVideoId,result);
 	};
 
 	function truncate(str, max) {
 		return str.length > max ? str.substr(0, max-1) + '…' : str;
-	}
+	};
 
 </script>
 <div id="app">
@@ -91,11 +92,11 @@
 	    <div id="filter">
 			<ul>
 			{#each filteredAths.slice(0,5) as fa,i}
-			{#if fa.id != showVideoId}
-			<li><button on:click={() => update(fa.id)}> 🗣️ </button> {fa.name}, {fa.team} ({fa.sport}) </li>
-			{:else}
-			<li><button disabled on:click={() => update(fa.id)}> 🗣️ </button> {fa.name}, {fa.team} ({fa.sport}) </li>
-			{/if}
+				{#if fa.id != showVideoId}
+				<li><button on:click={() => update(fa.id)}> 🗣️ </button> {fa.name}, {fa.team} ({fa.sport}) </li>
+				{:else}
+				<li><button disabled on:click={() => update(fa.id)}> 🗣️ </button> {fa.name}, {fa.team} ({fa.sport}) </li>
+				{/if}
 			{/each}
 			</ul>
 			<p id="records">{filteredAths.length} records found, {Math.min(filteredAths.length,5)} displayed.</p>
@@ -139,7 +140,7 @@
 	}
 
 	p.header {
-		font-size: 24px ;
+		font-size: 22px ;
 		margin: 6px;
 		margin-right: 0px ;
 	}
@@ -149,7 +150,7 @@
 		margin-bottom: 6px;
 		margin-right: 6px;
 		float: right;
-		font-size:18px;
+		font-size:14px;
 		vertical-align: bottom;
 	}
 
