@@ -55,27 +55,24 @@
 	</div>
 
 	<section id="video-section">
-
-
-
-		{#key showVideoId}
-				<p class="header">
-			Listen to...<br><strong><u>{result.name}</u></strong>
-		<span class="header">
-			Random:<button on:click={random}> 🗣️ </button>
-		</span>
-
-		  
-		  		</p>
-
-		<media-player  src="{result.mp4}"
-		  playsinline
-		>
-		  <media-outlet>
-		  <media-play-button />
-		  </media-outlet>
-		</media-player>
-		{/key}
+			<p class="header">
+				Listen to...<br><strong><u>{result.name}</u></strong>
+				<span class="header">
+				Random:<button on:click={random}> 🗣️ </button>
+				</span>
+			</p>
+			{#key showVideoId}
+			<div id="video-wrapper">
+			<media-player  src="{result.mp4}"
+			  playsinline
+			>
+			  <media-outlet>
+			  <media-play-button />
+			  </media-outlet>
+			</media-player>
+			</div>
+			{/key}
+		
 	</section>
 
 	<section id="query-section">
@@ -129,10 +126,12 @@
 		margin-bottom: 6px;
 		height: 30px;
 		width: 30px;
+	    -webkit-border-radius:1px;
 	}
 
 
 	input {
+		font-size:18px ;
 		margin: 6px;
 		margin-left: 0px;
 		height: 30px ;
@@ -150,7 +149,7 @@
 		margin-bottom: 6px;
 		margin-right: 6px;
 		float: right;
-		font-size:14px;
+		font-size:16px;
 		vertical-align: bottom;
 	}
 
@@ -182,5 +181,10 @@
 	    left: 0;
 	    position: absolute;
 	    top: 0;
+	}
+
+	#video-wrapper {
+		aspect-ratio: 1 / 1;
+		max-height:480px;
 	}
 </style>
