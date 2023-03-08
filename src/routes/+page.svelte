@@ -3,7 +3,7 @@
 	import 'vidstack/styles/base.css';
 	import 'vidstack/styles/ui/buttons.css';
 	import 'vidstack/styles/ui/sliders.css';
-
+	import { fade } from 'svelte/transition';
 	import { defineCustomElements } from 'vidstack/elements';
 
 	defineCustomElements();
@@ -58,21 +58,27 @@
 			<p class="header">
 				Listen to...<br><strong><u>{result.name}</u></strong>
 				<span class="header">
-				Random:<button on:click={random}> 🗣️ </button>
+				Random:
+				<button on:click={random}>
+				{#key showVideoId}
+				<span in:fade> 🗣️ </span>
+				{/key}
+				</button>
 				</span>
 			</p>
-			{#key showVideoId}
 			<div id="video-wrapper">
-			<media-player  src="{result.mp4}"
+			{#key showVideoId}
+			
+			<media-player  in:fade src="{result.mp4}"
 			  playsinline
 			>
 			  <media-outlet>
 			  <media-play-button />
 			  </media-outlet>
 			</media-player>
-			</div>
+			
 			{/key}
-		
+			</div>
 	</section>
 
 	<section id="query-section">
@@ -126,9 +132,17 @@
 		margin-bottom: 6px;
 		height: 30px;
 		width: 30px;
-	    -webkit-border-radius:1px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		padding: 1px;
+		-webkit-appearance:none;
 	}
 
+	button:disabled {
+		background-color: white;
+		opacity: 50%;
+	}
 
 	input {
 		font-size:18px ;
@@ -136,6 +150,7 @@
 		margin-left: 0px;
 		height: 30px ;
 		width: 200px ;
+		border-radius: 5px;
 	}
 
 	p.header {
@@ -185,6 +200,15 @@
 
 	#video-wrapper {
 		aspect-ratio: 1 / 1;
-		max-height:480px;
+		height: 476px;
 	}
+
+@media only screen and (max-width: 480px) {
+	#video-wrapper {
+		aspect-ratio: 1 / 1;
+		width:100%;
+		height:100vw;
+	}
+}
+
 </style>
