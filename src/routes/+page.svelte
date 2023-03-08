@@ -15,9 +15,7 @@
 
 	// this is the starting point for displaying the athlete and their video
 
-	let athleteShowId = 1;
-
-	$: result = athletes.find(item => item.id === athleteShowId)
+	$: result = {"id":3,"name":"Nelson Asofa-Solomona", "sport":"League", "team":"Storm","mp4":"NelsonAsofa-Solomona.mp4"}
 
 	// this is where the search results come from
 
@@ -33,8 +31,6 @@
 		});
 	};
 
-	let randAth = 2;
-
 	function update(x) {
 		document.body.scrollIntoView({behavior: 'smooth'});
 		const player = document.querySelector('media-player');
@@ -43,33 +39,27 @@
 		    player.src = athletes.find(item => item.id === x).mp4;
 	    });
 		result = athletes.find(item => item.id === x);
+		player.autoplay = true;
+		console.log(player.state);
     };
 
 	function random() {
 		const nAthletes = athletes.filter(function( obj ) {
 		    return obj.id !== result.id;
 		});
-		randAth = nAthletes[Math.floor(Math.random()*nAthletes.length)].id;
-		update(randAth);
+		update(nAthletes[Math.floor(Math.random()*nAthletes.length)].id);
 	};
 
-
+	function truncate(str, max) {
+		return str.length > max ? str.substr(0, max-1) + '…' : str;
+	};
 
 	onMount(async () => {
-		console.log('result is',result),result.mp4;
-
+		
 		const player = document.querySelector('media-player');
 		player.onAttach(async () => {
 			  player.src = result.mp4;
 		});
-
-
-		//};
-
-		//function truncate(str, max) {
-		//	return str.length > max ? str.substr(0, max-1) + '…' : str;
-		//};
-
 
 	});
 
@@ -86,7 +76,7 @@
 				<span class="header">
 				Random:
 				<button on:click={random}>
-				{#key athleteShowId}
+				{#key result}
 				<span in:fade> 🗣️ </span>
 				{/key}
 				</button>
