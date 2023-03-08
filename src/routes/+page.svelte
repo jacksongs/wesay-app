@@ -18,6 +18,7 @@
 	// Filter	
 	const searchAths = () => {	
 		return filteredAths = athletes.filter(ath => {
+			document.getElementById("missing").scrollIntoView({behavior: 'smooth'});
 			let athName = ath.name.toLowerCase();
 			return athName.includes(searchTerm.toLowerCase())
 		});
@@ -35,6 +36,7 @@
 		showVideoId = x;
 		console.log("Update",showVideoId,result);
 		console.log("Update",showVideoId,result);
+		document.body.scrollIntoView({behavior: 'smooth'});
 	};
 
 	function random() {
@@ -46,6 +48,7 @@
 	function truncate(str, max) {
 		return str.length > max ? str.substr(0, max-1) + '…' : str;
 	};
+
 
 </script>
 <div id="app">
@@ -92,7 +95,7 @@
 	        </p>
 	    </div> 
 
-	    <div id="filter">
+	    <div id="filter" >
 			<ul>
 			{#each filteredAths.slice(0,5) as fa,i}
 				{#if fa.id != showVideoId}
@@ -110,6 +113,7 @@
 			<p>Someone missing? Email a video link <a href="mailto:jacksongsmedia@gmail.com">here</a>.</p>
 		</div>
 	</section>	
+
 </div>
 
 
