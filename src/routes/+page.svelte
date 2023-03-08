@@ -1,21 +1,30 @@
 <script>
 
+	import { onMount } from 'svelte';
+
+	import { fade } from 'svelte/transition';
+
 	import 'vidstack/styles/base.css';
 	import 'vidstack/styles/ui/buttons.css';
 	import 'vidstack/styles/ui/sliders.css';
-	import { fade } from 'svelte/transition';
 	import { defineCustomElements } from 'vidstack/elements';
-
+	import 'vidstack/define/media-player.js';
 	defineCustomElements();
 
-    import athletes from '$lib/data/data.json';
+	import athletes from '$lib/data/data.json';
 
-    let randAth = athletes[Math.floor(Math.random()*athletes.length)];
+	// this is the starting point for displaying the athlete and their video
 
-	// For Search Input
+	let athleteShowId = 1;
+
+	$: result = athletes.find(item => item.id === athleteShowId)
+
+	// this is where the search results come from
+
 	let searchTerm = "";
 
-	// Filter	
+	let filteredAths = athletes;
+
 	const searchAths = () => {	
 		return filteredAths = athletes.filter(ath => {
 			document.getElementById("missing").scrollIntoView({behavior: 'smooth'});
@@ -24,31 +33,45 @@
 		});
 	};
 
-    // Query results
-	let filteredAths = athletes;
-
-	// Starting player, try random
-    $: showVideoId = randAth.id;
-
-	$: result = athletes.find(item => item.id === showVideoId);
+	let randAth = 2;
 
 	function update(x) {
-		showVideoId = x;
-		console.log("Update",showVideoId,result);
-		console.log("Update",showVideoId,result);
 		document.body.scrollIntoView({behavior: 'smooth'});
-	};
+		const player = document.querySelector('media-player');
+		player.onAttach(() => {
+			  // This is queued and called when media can be played.
+		    player.src = athletes.find(item => item.id === x).mp4;
+	    });
+		result = athletes.find(item => item.id === x);
+    };
 
 	function random() {
-		randAth = athletes[Math.floor(Math.random()*athletes.length)];
-		showVideoId = randAth.id;
-		console.log("Random",showVideoId,result);
+		const nAthletes = athletes.filter(function( obj ) {
+		    return obj.id !== result.id;
+		});
+		randAth = nAthletes[Math.floor(Math.random()*nAthletes.length)].id;
+		update(randAth);
 	};
 
-	function truncate(str, max) {
-		return str.length > max ? str.substr(0, max-1) + '…' : str;
-	};
 
+
+	onMount(async () => {
+		console.log('result is',result),result.mp4;
+
+		const player = document.querySelector('media-player');
+		player.onAttach(async () => {
+			  player.src = result.mp4;
+		});
+
+
+		//};
+
+		//function truncate(str, max) {
+		//	return str.length > max ? str.substr(0, max-1) + '…' : str;
+		//};
+
+
+	});
 
 </script>
 <div id="app">
@@ -63,16 +86,16 @@
 				<span class="header">
 				Random:
 				<button on:click={random}>
-				{#key showVideoId}
+				{#key athleteShowId}
 				<span in:fade> 🗣️ </span>
 				{/key}
 				</button>
 				</span>
 			</p>
 			<div id="video-wrapper">
-			{#key showVideoId}
 			
-			<media-player  in:fade src="{result.mp4}"
+			
+			<media-player
 			  playsinline
 			>
 			  <media-outlet>
@@ -80,7 +103,7 @@
 			  </media-outlet>
 			</media-player>
 			
-			{/key}
+			
 			</div>
 	</section>
 
@@ -98,7 +121,7 @@
 	    <div id="filter" >
 			<ul>
 			{#each filteredAths.slice(0,5) as fa,i}
-				{#if fa.id != showVideoId}
+				{#if fa.id != result.id}
 				<li><button on:click={() => update(fa.id)}> 🗣️ </button> {fa.name}, {fa.team} ({fa.sport}) </li>
 				{:else}
 				<li><button disabled on:click={() => update(fa.id)}> 🗣️ </button> {fa.name}, {fa.team} ({fa.sport}) </li>
@@ -146,6 +169,7 @@
 	button:disabled {
 		background-color: white;
 		opacity: 50%;
+		cursor: default;
 	}
 
 	input {
