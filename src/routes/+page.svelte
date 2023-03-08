@@ -129,7 +129,7 @@
 
 	button {
 		margin-left: 6px;
-		margin-bottom: 6px;
+		margin-bottom: 12px;
 		height: 30px;
 		width: 30px;
 		border: none;
@@ -154,7 +154,7 @@
 	}
 
 	p.header {
-		font-size: 22px ;
+		font-size: 20px ;
 		margin: 6px;
 		margin-right: 0px ;
 	}
@@ -198,16 +198,23 @@
 	    top: 0;
 	}
 
+
 	#video-wrapper {
-		aspect-ratio: 1 / 1;
+		width: 100%;
 		height: 476px;
+		background-color: black;
+		padding-top: 2px;
+		padding-bottom: 2px;
+		margin-top: 12px ;
 	}
 
 @media only screen and (max-width: 480px) {
 	#video-wrapper {
 		aspect-ratio: 1 / 1;
 		width:100%;
-		height:100vw;
+		height:99vw;
+		padding-top: 2px;
+		padding-bottom: 2px;
 	}
 }
 
