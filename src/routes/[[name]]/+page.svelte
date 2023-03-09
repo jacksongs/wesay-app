@@ -1,7 +1,8 @@
 <script type="text/javascript">
 
 	import { page } from '$app/stores'
-	import { fade } from 'svelte/transition'
+	import { fade, fly,crossfade,blur,slide,scale,draw } from 'svelte/transition'
+	import { quintOut } from 'svelte/easing';
 	import { onMount } from 'svelte';
 
 	import 'vidstack/styles/base.css';
@@ -14,20 +15,31 @@
 	export let data;
 	$: athlete = data.athlete;
 
-	function randomise(a) {
+	function randomNext(a) {
 		const nAthletes = data.allAthletes.filter(function( obj ) {
 		    return obj.id !== a.id;
 		});
 		return nAthletes[Math.floor(Math.random()*nAthletes.length)];
 	};
 
-	$: random = randomise(athlete);
+	$: random = randomNext(athlete);
 	// this is where the search results come from
 	let searchTerm = "";
-	let filteredAths = data.allAthletes;
+
+	function filterAths(a) {
+		const filtered = data.allAthletes.filter(function( obj ) {
+		    return obj.id !== a.id;
+		});
+		return filtered;
+	};
+
+	$: filteredAths = filterAths(athlete);
 
 	const searchAths = () => {	
-		return filteredAths = data.allAthletes.filter(ath => {
+		const otherAthletes = data.allAthletes.filter(function( obj ) {
+		    return obj.id !== athlete.id;
+		});
+		return filteredAths = otherAthletes.filter(ath => {
 			document.getElementById("missing").scrollIntoView({behavior: 'smooth'});
 			let athName = ath.name.toLowerCase();
 			return athName.includes(searchTerm.toLowerCase())
@@ -61,9 +73,8 @@
 					Listen to...<br><strong>{athlete.name}</strong>
 					<span class="header">
 					{#key athlete}
-					<a href={random.name.replaceAll(" ","")} on:click={() =>onClick(random)} data-sveltekit-preload-data><button >
+					<a href={random.name.replaceAll(" ","")} on:click={() =>onClick(random)} data-sveltekit-preload-data>
 					<span in:fade> 🗣️ Random</span>
-					</button>
 					</a>
 					{/key}
 					</span>
@@ -97,11 +108,7 @@
 		    <div id="filter" >
 				<ul >
 				{#each filteredAths.slice(0,20) as fa,i}
-					{#if fa.id != athlete.id}
-					<li><a on:click={() =>onClick(fa)} data-sveltekit-preload-data href="/{fa.name.replaceAll(' ','')}"><button ><span> 🗣️ {fa.name} </span></button></a></li>
-					{:else}
-					<li><a on:click={() =>onClick(fa)} data-sveltekit-preload-data href="/{fa.name.replaceAll(' ','')}"><button disabled ><span in:fade> 🗣️ {fa.name}</span></button></a></li>
-					{/if}
+					<li transition:slide="{{delay: 250, duration: 300, easing: quintOut, axis: 'y'}}"><a  on:click={() =>onClick(fa)} data-sveltekit-preload-data href="/{fa.name.replaceAll(' ','')}"><span> 🗣️ {fa.name} </span></a></li>
 				{/each}
 				</ul>
 				<p id="records">{filteredAths.length} record{#if filteredAths.length>1}s{/if} found, {Math.min(filteredAths.length,20)} displayed.</p>
