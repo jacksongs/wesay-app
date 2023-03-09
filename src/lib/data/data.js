@@ -1,4 +1,4 @@
-[
+export const athletes = [
 	{"id":1,"name":"Albert Hopoate", "sport":"League", "team":"Raiders","mp4":"AlbertHopoate.mp4"},
 	{"id":2,"name":"Adrian Trevilyan", "sport":"League", "team":"Raiders","mp4":"AdrianTrevilyan.mp4"},
 	{"id":3,"name":"Nelson Asofa-Solomona", "sport":"League", "team":"Storm","mp4":"NelsonAsofa-Solomona.mp4"},
