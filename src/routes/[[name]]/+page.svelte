@@ -62,6 +62,8 @@
 	}
 
 </script>
+
+
 <div id="app">
 	<div id="brand">
 			<h1>We Say</h1>
