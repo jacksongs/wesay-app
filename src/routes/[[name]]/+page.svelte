@@ -113,7 +113,7 @@
 					<li transition:slide="{{delay: 250, duration: 300, easing: quintOut, axis: 'y'}}"><a  on:click={() =>onClick(fa)} data-sveltekit-preload-data href="/{fa.name.replaceAll(' ','_')}"><span> 🗣️ {fa.name} </span></a></li>
 				{/each}
 				</ul>
-				<p id="records">{filteredAths.length} record{#if filteredAths.length>1}s{/if} found, {Math.min(filteredAths.length,20)} displayed.</p>
+				<p id="records">{filteredAths.length} record{#if filteredAths.length!==1}s{/if} found, {Math.min(filteredAths.length,20)} displayed.</p>
 			</div>
 			<div>
 
