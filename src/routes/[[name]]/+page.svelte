@@ -13,6 +13,7 @@
 	defineCustomElements();
 
 	export let data;
+	console.log(data.athlete);
 	$: athlete = data.athlete;
 
 	function randomNext(a) {
