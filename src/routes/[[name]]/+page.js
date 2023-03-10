@@ -10,7 +10,7 @@ export function load( { params }) {
       allAthletes: athletes
     };
   } else {
-    const ath = athletes.find(item => item.name.toLowerCase().replaceAll(' ','') === params.name.toLowerCase().replaceAll(' ',''));
+    const ath = athletes.find(item => item.name.toLowerCase() === params.name.toLowerCase().replaceAll('_',' '));
     if (!ath) {
       return {
         athlete: {"name":"No name found","id":0,"sport":"None","mp4":"rick.mp4" },

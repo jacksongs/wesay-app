@@ -75,7 +75,7 @@
 					Listen to...<br><strong>{athlete.name}</strong>
 					<span class="header">
 					{#key athlete}
-					<a href={random.name.replaceAll(" ","")} on:click={() =>onClick(random)} data-sveltekit-preload-data>
+					<a href={random.name.replaceAll(" ","_")} on:click={() =>onClick(random)} data-sveltekit-preload-data>
 					<span in:fade> 🗣️ Random</span>
 					</a>
 					{/key}
@@ -110,7 +110,7 @@
 		    <div id="filter" >
 				<ul >
 				{#each filteredAths.slice(0,20) as fa,i}
-					<li transition:slide="{{delay: 250, duration: 300, easing: quintOut, axis: 'y'}}"><a  on:click={() =>onClick(fa)} data-sveltekit-preload-data href="/{fa.name.replaceAll(' ','')}"><span> 🗣️ {fa.name} </span></a></li>
+					<li transition:slide="{{delay: 250, duration: 300, easing: quintOut, axis: 'y'}}"><a  on:click={() =>onClick(fa)} data-sveltekit-preload-data href="/{fa.name.replaceAll(' ','_')}"><span> 🗣️ {fa.name} </span></a></li>
 				{/each}
 				</ul>
 				<p id="records">{filteredAths.length} record{#if filteredAths.length>1}s{/if} found, {Math.min(filteredAths.length,20)} displayed.</p>
