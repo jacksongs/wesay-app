@@ -31,6 +31,7 @@
 		const filtered = data.allAthletes.filter(function( obj ) {
 		    return obj.id !== a.id;
 		});
+		filtered.sort((a, b) => a.name.localeCompare(b.name));
 		return filtered;
 	};
 
